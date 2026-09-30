@@ -1,0 +1,30 @@
+name: byoa-golden-ci
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "::warning file=src/app.py,line=1::byoa golden warning annotation"
+      - run: echo "::notice file=src/app.py,line=2::byoa golden notice annotation"
+      - run: echo "byoa golden artifact $(date)" > out.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: byoa-golden-artifact
+          path: out.txt
+          retention-days: 90
+  flaky:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "::error::byoa golden deliberate failure" && exit 1
+  deploy-qa:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: qa
+    steps:
+      - run: echo "deploying to qa (no-op)"
