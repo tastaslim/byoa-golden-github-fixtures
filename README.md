@@ -1,2 +1,3 @@
 # byoa-golden-github-fixtures
-BYOA golden dataset fixture — fixtures
+
+Updated after create (modified-record axis).
