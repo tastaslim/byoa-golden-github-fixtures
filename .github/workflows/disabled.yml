@@ -1,0 +1,7 @@
+name: byoa-golden-disabled
+on: workflow_dispatch
+jobs:
+  noop:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo noop
